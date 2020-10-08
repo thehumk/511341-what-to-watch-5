@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 const Main = (props) => {
   const {title, genre, releaseDate} = props.film;
@@ -22,9 +23,7 @@ const Main = (props) => {
           </div>
 
           <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
+            <Link to="/login" className="user-block__link">Sign in</Link>
           </div>
         </header>
 
@@ -103,7 +102,7 @@ const Main = (props) => {
                 <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
               </div>
               <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
+                <Link to="/films/1" className="small-movie-card__link">Fantastic Beasts: The Crimes of Grindelwald</Link>
               </h3>
             </article>
 
