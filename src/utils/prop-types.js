@@ -23,3 +23,9 @@ export const propsForFilms = PropTypes.shape({
     date: PropTypes.instanceOf(Date),
   })).isRequired,
 }).isRequired;
+
+export const propsForRouter = PropTypes.shape({
+  match: PropTypes.object,
+  history: PropTypes.object,
+  location: PropTypes.object,
+});

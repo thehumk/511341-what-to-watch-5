@@ -1,9 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {getFilmRating, getSimilarFilms} from '../../utils/film';
 import FilmsList from '../films-list/films-list';
-import {propsForFilms} from '../../utils/prop-types';
+import {propsForFilms, propsForRouter} from '../../utils/prop-types';
 
 const Film = (props) => {
   const {films} = props;
@@ -16,7 +14,7 @@ const Film = (props) => {
   const similarFilms = getSimilarFilms(films, film.details.genre);
 
   return (
-    <React.Fragment>
+    <>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
@@ -128,12 +126,13 @@ const Film = (props) => {
           </div>
         </footer>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 
 Film.propTypes = {
   films: PropTypes.arrayOf(propsForFilms).isRequired,
+  routerProps: propsForRouter,
 };
 
 export default Film;

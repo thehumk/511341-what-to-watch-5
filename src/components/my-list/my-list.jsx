@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import FilmsList from '../films-list/films-list';
 import {propsForFilms} from '../../utils/prop-types';
