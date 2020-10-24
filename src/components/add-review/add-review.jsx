@@ -1,8 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import ReviewForm from '../review-form/review-form';
-import {propsForFilms} from '../../utils/prop-types';
+import {propsForFilms, propsForRouter} from '../../utils/prop-types';
 
 const AddReview = (props) => {
   const {films} = props;
@@ -61,6 +59,7 @@ const AddReview = (props) => {
 
 AddReview.propTypes = {
   films: PropTypes.arrayOf(propsForFilms).isRequired,
+  routerProps: propsForRouter,
 };
 
 export default AddReview;

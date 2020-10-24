@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import FilmsList from '../films-list/films-list';
 import {propsForFilms} from '../../utils/prop-types';
@@ -7,7 +5,7 @@ import {propsForFilms} from '../../utils/prop-types';
 const Main = (props) => {
   const films = props.films;
   return (
-    <React.Fragment>
+    <>
       <section className="movie-card">
         <div className="movie-card__bg">
           <img src={`img/${films[0].bigPoster}`} alt="The Grand Budapest Hotel" />
@@ -119,7 +117,7 @@ const Main = (props) => {
           </div>
         </footer>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

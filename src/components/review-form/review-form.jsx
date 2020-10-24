@@ -1,7 +1,4 @@
-import React, {PureComponent} from 'react';
-
-
-class ReviewForm extends PureComponent {
+class ReviewForm extends React.PureComponent {
   constructor(props) {
     super(props);
 
