@@ -1,5 +1,3 @@
-const MAX_COUNT_SIMILAR_FILMS = 4;
-
 export const getFilmRating = (rating) => {
   switch (true) {
     case rating >= 0 && rating < 3:
@@ -17,12 +15,22 @@ export const getFilmRating = (rating) => {
   return ``;
 };
 
-export const getSimilarFilms = (films, genre) => {
-  const similarFIlms = films.filter((elem) => elem.details.genre === genre);
+export const getUniqueFilmsGenres = (films) => {
+  let allGenres = [`All`];
 
-  if (similarFIlms.length > MAX_COUNT_SIMILAR_FILMS) {
-    return similarFIlms.slice(0, MAX_COUNT_SIMILAR_FILMS);
+  for (let film of films) {
+    allGenres.push(film.details.genre);
   }
 
-  return similarFIlms;
+  return new Set(allGenres);
+};
+
+export const getFilteredFilms = (films, genre) => {
+  const genresList = Array.from(getUniqueFilmsGenres(films));
+
+  if (genre === genresList[0]) {
+    return films;
+  }
+
+  return films.filter((elem) => elem.details.genre === genre);
 };

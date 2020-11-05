@@ -24,6 +24,7 @@ class FilmsList extends React.PureComponent {
   }
 
   render() {
+    this.films = this.props.films;
     return (
       <div className="catalog__movies-list">
         {this.films.map((elem) => (
