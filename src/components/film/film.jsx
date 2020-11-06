@@ -1,7 +1,10 @@
 import {Link} from 'react-router-dom';
-import {getFilmRating, getSimilarFilms} from '../../utils/film';
+import {getFilteredFilms} from '../../utils/film';
 import FilmsList from '../films-list/films-list';
+import FilmTabs from '../film-tabs/film-tabs';
 import {propsForFilms, propsForRouter} from '../../utils/prop-types';
+
+const MAX_COUNT_SIMILAR_FILMS = 4;
 
 const Film = (props) => {
   const {films} = props;
@@ -9,9 +12,8 @@ const Film = (props) => {
 
   const film = films.find((elem) => elem.id === match.params.id);
 
-  const textRating = getFilmRating(film.details.rating);
-
-  const similarFilms = getSimilarFilms(films, film.details.genre);
+  const filteredFilms = getFilteredFilms(films, film.details.genre);
+  const similarFilms = filteredFilms.filter((elem) => elem.id !== film.id);
 
   return (
     <>
@@ -70,37 +72,7 @@ const Film = (props) => {
               <img src={`img/${film.poster}`} alt={film.title} width="218" height="327" />
             </div>
 
-            <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <a href="#" className="movie-nav__link">Overview</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Details</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="movie-rating">
-                <div className="movie-rating__score">{film.details.rating}</div>
-                <p className="movie-rating__meta">
-                  <span className="movie-rating__level">{textRating}</span>
-                  <span className="movie-rating__count">{film.details.quantityVotes} ratings</span>
-                </p>
-              </div>
-
-              <div className="movie-card__text">
-                <p>{film.details.description}</p>
-
-                <p className="movie-card__director"><strong>Director: {film.details.director}</strong></p>
-
-                <p className="movie-card__starring"><strong>Starring: {film.details.actors.join(`, `)} and other</strong></p>
-              </div>
-            </div>
+            <FilmTabs film={film}/>
           </div>
         </div>
       </section>
@@ -109,7 +81,7 @@ const Film = (props) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmsList films={similarFilms}/>
+          <FilmsList films={similarFilms.slice(0, MAX_COUNT_SIMILAR_FILMS)}/>
         </section>
 
         <footer className="page-footer">

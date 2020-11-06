@@ -20,7 +20,7 @@ export const propsForFilms = PropTypes.shape({
     text: PropTypes.string.isRequired,
     userRating: PropTypes.string.isRequired,
     userName: PropTypes.string.isRequired,
-    date: PropTypes.instanceOf(Date),
+    date: PropTypes.string.isRequired,
   })).isRequired,
 }).isRequired;
 

@@ -39,12 +39,14 @@ class FilmCard extends React.PureComponent {
       <article className="small-movie-card catalog__movies-card"
         onMouseEnter={this.mouseEnterHandler}
         onMouseLeave={this.mouseLeaveHandler}>
-        <div className="small-movie-card__image">
-          <VideoPlayer film={this.film} size={PreviewSize} playerStatus={playerStatus} />
-        </div>
-        <h3 className="small-movie-card__title">
-          <Link className="small-movie-card__link" to={`/films/${this.film.id}`}>{this.film.title}</Link>
-        </h3>
+        <Link className="small-movie-card__link" to={`/films/${this.film.id}`}>
+          <div className="small-movie-card__image">
+            <VideoPlayer film={this.film} size={PreviewSize} playerStatus={playerStatus} />
+          </div>
+          <h3 className="small-movie-card__title">
+            <span>{this.film.title}</span>
+          </h3>
+        </Link>
       </article>
     );
   }

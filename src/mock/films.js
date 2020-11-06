@@ -43,9 +43,15 @@ const DESCRIPTION = [
 ];
 
 const GENRES = [
-  `Drama`,
   `Comedy`,
-  `Western`,
+  `Crime`,
+  `Documentary`,
+  `Drama`,
+  `Horror`,
+  `Kids & Family`,
+  `Romance`,
+  `Sci-Fi`,
+  `Thriller`,
 ];
 
 const MIN_RELEASE_YEAR = 1970;
@@ -75,7 +81,7 @@ const getRandomReviews = () => {
       text: getRandomDescription(),
       userRating: getRandomNumber(0, 10),
       userName: `author`,
-      date: new Date(),
+      date: `December 24, 2016`,
     };
   }
 
@@ -96,6 +102,7 @@ const createRandomFilms = () => {
       details: {
         genre: GENRES[getRandomNumber(0, GENRES.length - 1)],
         description: getRandomDescription(),
+        runtime: getRandomNumber(90, 200),
         director: `Wes Andreson`,
         actors: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
         release: getRandomNumber(MIN_RELEASE_YEAR, MAX_RELEASE_YEAR),

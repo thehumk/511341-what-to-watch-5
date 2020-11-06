@@ -15,7 +15,7 @@ class VideoPlayer extends React.PureComponent {
 
   componentDidUpdate() {
     this.playerStatus = this.props.playerStatus;
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       if (this.playerStatus) {
         this.videoRef.current.play();
       }
@@ -24,6 +24,11 @@ class VideoPlayer extends React.PureComponent {
     if (!this.playerStatus) {
       this.videoRef.current.load();
     }
+  }
+
+  componentWillUnmount() {
+    this.playerStatus = false;
+    clearTimeout(this.timeoutId);
   }
 
   render() {
