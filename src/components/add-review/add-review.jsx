@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import ReviewForm from '../review-form/review-form';
 import {propsForFilms, propsForRouter} from '../../utils/prop-types';
 
@@ -62,4 +63,8 @@ AddReview.propTypes = {
   routerProps: propsForRouter,
 };
 
-export default AddReview;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export default connect(mapStateToProps)(AddReview);

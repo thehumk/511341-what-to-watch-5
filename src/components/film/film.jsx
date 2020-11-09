@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {getFilteredFilms} from '../../utils/film';
 import FilmsList from '../films-list/films-list';
 import FilmTabs from '../film-tabs/film-tabs';
@@ -7,13 +8,12 @@ import {propsForFilms, propsForRouter} from '../../utils/prop-types';
 const MAX_COUNT_SIMILAR_FILMS = 4;
 
 const Film = (props) => {
-  const {films} = props;
+  const {films, filteredFilms} = props;
   const {match} = props.routerProps;
 
   const film = films.find((elem) => elem.id === match.params.id);
 
-  const filteredFilms = getFilteredFilms(films, film.details.genre);
-  const similarFilms = filteredFilms.filter((elem) => elem.id !== film.id);
+  const similarFilms = filteredFilms(film.details.genre).filter((elem) => elem.id !== film.id);
 
   return (
     <>
@@ -104,7 +104,13 @@ const Film = (props) => {
 
 Film.propTypes = {
   films: PropTypes.arrayOf(propsForFilms).isRequired,
+  filteredFilms: PropTypes.func.isRequired,
   routerProps: propsForRouter,
 };
 
-export default Film;
+const mapStateToProps = (state) => ({
+  films: state.films,
+  filteredFilms: (genre) => getFilteredFilms(state.films, genre),
+});
+
+export default connect(mapStateToProps)(Film);

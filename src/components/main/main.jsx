@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
-import GenresList from '../genres-list/genres-list';
 import {propsForFilms} from '../../utils/prop-types';
+import {connect} from 'react-redux';
+import GenresList from '../genres-list/genres-list';
 
 const Main = (props) => {
   const films = props.films;
@@ -62,12 +63,7 @@ const Main = (props) => {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <GenresList films={films}/>
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <GenresList/>
         </section>
 
         <footer className="page-footer">
@@ -92,4 +88,8 @@ Main.propTypes = {
   films: PropTypes.arrayOf(propsForFilms).isRequired,
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export default connect(mapStateToProps)(Main);

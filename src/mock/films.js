@@ -1,6 +1,6 @@
 import {getRandomNumber} from '../utils/utils.js';
 
-const QUANTITY_FILMS = 8;
+const QUANTITY_FILMS = 20;
 
 const TITLES = [
   `Fantastic Beasts: The Crimes of Grindelwald`,
