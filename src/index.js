@@ -4,7 +4,6 @@ import App from './components/app/app';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {reducer} from './store/reducer';
-import {randomFilms} from './mock/films.js';
 
 const store = createStore(
     reducer,
@@ -13,9 +12,7 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-      <App
-        films={randomFilms}
-      />
+      <App/>
     </Provider>,
     document.querySelector(`#root`)
 );

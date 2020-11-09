@@ -5,44 +5,38 @@ import MyList from '../my-list/my-list';
 import Film from '../film/film';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
-import {propsForFilms} from '../../utils/prop-types';
 
-const App = (props) => {
-  const films = props.films;
+const App = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Main films={props.films}/>
+          <Main/>
         </Route>
         <Route exact path="/login">
-          <SingIn />
+          <SingIn/>
         </Route>
         <Route exact path="/mylist">
-          <MyList films={films}/>
+          <MyList/>
         </Route>
         <Route exact
           path="/films/:id"
           render={(routerProps) => (
-            <Film films={films} routerProps={routerProps}/>
+            <Film routerProps={routerProps}/>
           )}
         />
         <Route exact
           path="/films/:id/review"
           render={(routerProps) => (
-            <AddReview films={films} routerProps={routerProps}/>
+            <AddReview routerProps={routerProps}/>
           )}
         />
         <Route exact path="/player/:id">
-          <Player />
+          <Player/>
         </Route>
       </Switch>
     </BrowserRouter>
   );
-};
-
-App.propTypes = {
-  films: PropTypes.arrayOf(propsForFilms).isRequired,
 };
 
 export default App;

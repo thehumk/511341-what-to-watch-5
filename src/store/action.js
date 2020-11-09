@@ -9,8 +9,8 @@ export const ActionCreator = {
     payload: genre,
   }),
 
-  cangeFilmsList: (films) => ({
+  changeFilmsList: (genre) => ({
     type: ActionType.GET_FILMS_LIST_OF_GENRE,
-    payload: films,
+    payload: genre,
   }),
 };

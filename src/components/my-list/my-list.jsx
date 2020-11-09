@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import FilmsList from '../films-list/films-list';
 import {propsForFilms} from '../../utils/prop-types';
 
@@ -51,4 +52,8 @@ MyList.propTypes = {
   films: PropTypes.arrayOf(propsForFilms).isRequired,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export default connect(mapStateToProps)(MyList);

@@ -1,47 +1,35 @@
-import FilmCard from '../film-card/film-card';
 import {propsForFilms} from '../../utils/prop-types';
+import FilmCard from '../film-card/film-card';
+import ShowMoreButton from '../show-more-button/show-more-button';
+import {withFilmsList} from '../../hocs/with-films-list/with-films-list';
 
-class FilmsList extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.films = props.films;
-
-    this.state = {
-      hoveredFilm: null,
-    };
-
-    this.cardHoverHandler = this.cardHoverHandler.bind(this);
-    this.cardLeaveHoverHandler = this.cardLeaveHoverHandler.bind(this);
-  }
-
-  cardHoverHandler(id) {
-    this.setState({hoveredFilm: id});
-  }
-
-  cardLeaveHoverHandler() {
-    this.setState({hoveredFilm: null});
-  }
-
-  render() {
-    this.films = this.props.films;
-    return (
+const FilmsList = (props) => {
+  const {films, quantityRenderFilms, cardHoverHandler, cardLeaveHoverHandler, showMoreButtonClickHandler} = props;
+  return (
+    <>
       <div className="catalog__movies-list">
-        {this.films.map((elem) => (
+        {films.slice(0, quantityRenderFilms).map((elem) => (
           <FilmCard
             key={elem.id}
             film={elem}
-            cardHoverHandler={this.cardHoverHandler}
-            cardLeaveHoverHandler={this.cardLeaveHoverHandler}
+            cardHoverHandler={cardHoverHandler}
+            cardLeaveHoverHandler={cardLeaveHoverHandler}
           />
         ))}
       </div>
-    );
-  }
-}
+      <div className="catalog__more">
+        {quantityRenderFilms < films.length ? <ShowMoreButton clickHandler={showMoreButtonClickHandler}/> : ``}
+      </div>
+    </>
+  );
+};
 
 FilmsList.propTypes = {
   films: PropTypes.arrayOf(propsForFilms).isRequired,
+  quantityRenderFilms: PropTypes.number.isRequired,
+  cardHoverHandler: PropTypes.func.isRequired,
+  cardLeaveHoverHandler: PropTypes.func.isRequired,
+  showMoreButtonClickHandler: PropTypes.func.isRequired,
 };
 
-export default FilmsList;
+export default withFilmsList(FilmsList);

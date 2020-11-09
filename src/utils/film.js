@@ -1,3 +1,5 @@
+import {genresList} from '../store/reducer';
+
 export const getFilmRating = (rating) => {
   switch (true) {
     case rating >= 0 && rating < 3:
@@ -15,19 +17,7 @@ export const getFilmRating = (rating) => {
   return ``;
 };
 
-export const getUniqueFilmsGenres = (films) => {
-  let allGenres = [`All`];
-
-  for (let film of films) {
-    allGenres.push(film.details.genre);
-  }
-
-  return new Set(allGenres);
-};
-
 export const getFilteredFilms = (films, genre) => {
-  const genresList = Array.from(getUniqueFilmsGenres(films));
-
   if (genre === genresList[0]) {
     return films;
   }
