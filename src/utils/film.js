@@ -1,5 +1,3 @@
-import {genresList} from '../store/reducer';
-
 export const getFilmRating = (rating) => {
   switch (true) {
     case rating >= 0 && rating < 3:
@@ -15,12 +13,4 @@ export const getFilmRating = (rating) => {
   }
 
   return ``;
-};
-
-export const getFilteredFilms = (films, genre) => {
-  if (genre === genresList[0]) {
-    return films;
-  }
-
-  return films.filter((elem) => elem.details.genre === genre);
 };

@@ -2,23 +2,24 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import ReviewForm from '../review-form/review-form';
 import {propsForFilms, propsForRouter} from '../../utils/prop-types';
+import {AppRoute} from '../../utils/const';
 
 const AddReview = (props) => {
   const {films} = props;
   const {match} = props.routerProps;
-  const film = films.find((elem) => elem.id === match.params.id);
+  const film = films.find((elem) => elem.id.toString() === match.params.id);
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src={`img/${film.bigPoster}`} alt={film.title} />
+          <img src={film.background_image} alt={film.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
           <div className="logo">
-            <Link to="/" className="logo__link">
+            <Link to={AppRoute.ROOT} className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
@@ -28,7 +29,7 @@ const AddReview = (props) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.title}</Link>
+                <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -38,7 +39,7 @@ const AddReview = (props) => {
 
           <div className="user-block">
             <div className="user-block__avatar">
-              <Link to="/mylist">
+              <Link to={AppRoute.MY_LIST}>
                 <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
               </Link>
             </div>
@@ -46,7 +47,7 @@ const AddReview = (props) => {
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src={`img/${film.poster}`} alt={film.title} width="218" height="327" />
+          <img src={film.poster_image} alt={film.name} width="218" height="327" />
         </div>
       </div>
 
@@ -63,8 +64,8 @@ AddReview.propTypes = {
   routerProps: propsForRouter,
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films,
+const mapStateToProps = ({DATA}) => ({
+  films: DATA.films,
 });
 
 export default connect(mapStateToProps)(AddReview);

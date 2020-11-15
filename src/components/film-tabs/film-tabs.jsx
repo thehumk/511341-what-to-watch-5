@@ -11,8 +11,8 @@ const TypeTabs = {
 
 const FilmTabs = (props) => {
   const {film, tab, tabsClickHandler} = props;
-  const textRating = getFilmRating(film.details.rating);
-  const duration = (film.details.runtime / 60 | 0) + `h ` + (film.details.runtime % 60) + `m`;
+  const textRating = getFilmRating(film.rating);
+  const duration = (film.run_time / 60 | 0) + `h ` + (film.run_time % 60) + `m`;
 
   return (
     <div className="movie-card__desc">
@@ -40,19 +40,19 @@ const FilmTabs = (props) => {
       {tab === TypeTabs.OVERVIEW && (
         <>
           <div className="movie-rating">
-            <div className="movie-rating__score">{film.details.rating}</div>
+            <div className="movie-rating__score">{film.rating}</div>
             <p className="movie-rating__meta">
               <span className="movie-rating__level">{textRating}</span>
-              <span className="movie-rating__count">{film.details.quantityVotes} ratings</span>
+              <span className="movie-rating__count">{film.scores_count} ratings</span>
             </p>
           </div>
 
           <div className="movie-card__text">
-            <p>{film.details.description}</p>
+            <p>{film.description}</p>
 
-            <p className="movie-card__director"><strong>Director: {film.details.director}</strong></p>
+            <p className="movie-card__director"><strong>Director: {film.director}</strong></p>
 
-            <p className="movie-card__starring"><strong>Starring: {film.details.actors.join(`, `)} and other</strong></p>
+            <p className="movie-card__starring"><strong>Starring: {film.starring.join(`, `)} and other</strong></p>
           </div>
         </>
       )}
@@ -62,15 +62,15 @@ const FilmTabs = (props) => {
           <div className="movie-card__text-col">
             <p className="movie-card__details-item">
               <strong className="movie-card__details-name">Director</strong>
-              <span className="movie-card__details-value">{film.details.director}</span>
+              <span className="movie-card__details-value">{film.director}</span>
             </p>
             <p className="movie-card__details-item">
               <strong className="movie-card__details-name">Starring</strong>
               <span className="movie-card__details-value">
-                {film.details.actors.map((elem, i) => (
+                {film.starring.map((elem, i) => (
                   <React.Fragment key={i}>
                     {elem}
-                    {i < film.details.actors.length - 1 ? `, ` : ``}
+                    {i < film.starring.length - 1 ? `, ` : ``}
                     <br/>
                   </React.Fragment>
                 ))}
@@ -85,11 +85,11 @@ const FilmTabs = (props) => {
             </p>
             <p className="movie-card__details-item">
               <strong className="movie-card__details-name">Genre</strong>
-              <span className="movie-card__details-value">{film.details.genre}</span>
+              <span className="movie-card__details-value">{film.genre}</span>
             </p>
             <p className="movie-card__details-item">
               <strong className="movie-card__details-name">Released</strong>
-              <span className="movie-card__details-value">{film.details.release}</span>
+              <span className="movie-card__details-value">{film.released}</span>
             </p>
           </div>
         </div>
@@ -98,7 +98,7 @@ const FilmTabs = (props) => {
       {tab === TypeTabs.REVIEWS && (
         <div className="movie-card__reviews movie-card__row">
           <div className="movie-card__reviews-col">
-            {film.reviews.map((elem, i) => (
+            {/* {film.reviews.map((elem, i) => (
               <div className="review" key={i}>
                 <blockquote className="review__quote">
                   <p className="review__text">{elem.text}</p>
@@ -111,7 +111,7 @@ const FilmTabs = (props) => {
 
                 <div className="review__rating">{elem.userRating}</div>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
       )}

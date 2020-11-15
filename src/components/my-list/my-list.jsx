@@ -1,15 +1,17 @@
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import {propsForFilms} from '../../utils/prop-types';
+import {AppRoute} from '../../utils/const';
 
 const MyList = (props) => {
-  const {films} = props;
+  const {films, renderFilmsCount, changeRenderFilmsCount} = props;
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
         <div className="logo">
-          <Link to="/" className="logo__link">
+          <Link to={AppRoute.ROOT} className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -28,12 +30,15 @@ const MyList = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmsList films={films}/>
+        <FilmsList
+          films={films}
+          renderFilmsCount={renderFilmsCount}
+          changeRenderFilmsCount={changeRenderFilmsCount}/>
       </section>
 
       <footer className="page-footer">
         <div className="logo">
-          <Link to="/" className="logo__link logo__link--light">
+          <Link to={AppRoute.ROOT} className="logo__link logo__link--light">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -50,10 +55,19 @@ const MyList = (props) => {
 
 MyList.propTypes = {
   films: PropTypes.arrayOf(propsForFilms).isRequired,
+  renderFilmsCount: PropTypes.number.isRequired,
+  changeRenderFilmsCount: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films,
+const mapStateToProps = ({DATA, FILMS_STATUS}) => ({
+  films: DATA.films,
+  renderFilmsCount: FILMS_STATUS.renderFilmsCount,
 });
 
-export default connect(mapStateToProps)(MyList);
+const mapDispatchToProps = (dispatch) => ({
+  changeRenderFilmsCount(count) {
+    dispatch(ActionCreator.changeRenderFilmsCount(count));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);

@@ -2,14 +2,15 @@ import {Link} from 'react-router-dom';
 import {propsForFilms} from '../../utils/prop-types';
 import {connect} from 'react-redux';
 import GenresList from '../genres-list/genres-list';
+import {AuthorizationStatus, AppRoute} from '../../utils/const';
 
 const Main = (props) => {
-  const films = props.films;
+  const {films, authorizationStatus, onMyListButtonClick, onPlayerButtonClick} = props;
   return (
     <>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={`img/${films[0].bigPoster}`} alt="The Grand Budapest Hotel" />
+          <img src={films[0].background_image} alt="The Grand Budapest Hotel" />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -24,31 +25,42 @@ const Main = (props) => {
           </div>
 
           <div className="user-block">
-            <Link to="/login" className="user-block__link">Sign in</Link>
+            {authorizationStatus === AuthorizationStatus.NO_AUTH && (
+              <Link to={AppRoute.SING_IN} className="user-block__link">Sign in</Link>
+            )}
+            {authorizationStatus === AuthorizationStatus.AUTH && (
+              <div className="user-block__avatar">
+                <Link to={AppRoute.MY_LIST}>
+                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                </Link>
+              </div>
+            )}
           </div>
         </header>
 
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={`img/${films[0].poster}`} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={films[0].poster_image} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{films[0].title}</h2>
+              <h2 className="movie-card__title">{films[0].name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{films[0].details.genre}</span>
-                <span className="movie-card__year">{films[0].details.release}</span>
+                <span className="movie-card__genre">{films[0].genre}</span>
+                <span className="movie-card__year">{films[0].released}</span>
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <button className="btn btn--play movie-card__button" type="button" onClick={() => {
+                  onPlayerButtonClick(films[0].id);
+                }}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button">
+                <button className="btn btn--list movie-card__button" type="button" onClick={onMyListButtonClick}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
@@ -86,10 +98,14 @@ const Main = (props) => {
 
 Main.propTypes = {
   films: PropTypes.arrayOf(propsForFilms).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  onMyListButtonClick: PropTypes.func.isRequired,
+  onPlayerButtonClick: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films,
+const mapStateToProps = ({DATA, USER}) => ({
+  films: DATA.films,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 export default connect(mapStateToProps)(Main);
