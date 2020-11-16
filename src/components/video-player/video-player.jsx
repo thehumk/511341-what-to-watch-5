@@ -36,8 +36,8 @@ class VideoPlayer extends React.PureComponent {
       <>
         <video
           ref={this.videoRef}
-          poster={`img/${this.film.smallPoster}`}
-          src={this.film.preview}
+          poster={this.film.preview_image}
+          src={this.film.preview_video_link}
           width={this.size.WIDTH}
           height={this.size.HEIGHT}
           muted

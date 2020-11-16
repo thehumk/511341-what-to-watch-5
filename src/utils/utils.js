@@ -7,12 +7,14 @@ export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
-export const getUniqueFilmsGenres = (films) => {
-  let allGenres = [`All`];
+export const getFormattedLeftTime = (leftTime) => {
+  const addZeroForTime = (time) => {
+    return time < 10 ? `0` + time : time;
+  };
 
-  for (let film of films) {
-    allGenres.push(film.details.genre);
-  }
+  const hours = addZeroForTime(Math.floor(leftTime / 3600));
+  const minutes = addZeroForTime(Math.floor((leftTime - (hours * 3600)) / 60));
+  const seconds = addZeroForTime(Math.floor(leftTime - (hours * 3600) - (minutes * 60)));
 
-  return new Set(allGenres);
+  return `${hours}:${minutes}:${seconds}`;
 };
