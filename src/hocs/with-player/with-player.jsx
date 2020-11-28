@@ -1,5 +1,7 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {propsForFilms, propsForRouter} from '../../utils/prop-types';
+import {propsForFilms} from '../../utils/prop-types';
 
 export const withPlayer = (Component) => {
   class WithPlayer extends React.PureComponent {
@@ -7,8 +9,8 @@ export const withPlayer = (Component) => {
       super(props);
 
       this.films = props.films;
-      this.routerProps = props.routerProps;
-      this.film = this.films.find((elem) => elem.id.toString() === this.routerProps.match.params.id);
+      this.match = props.match;
+      this.film = this.films.find((elem) => elem.id.toString() === this.match.params.id);
 
       this.state = {
         playFilm: true,
@@ -32,11 +34,15 @@ export const withPlayer = (Component) => {
 
     componentDidUpdate() {
       const video = this.videoRef.current;
-      this.state.playFilm ? video.play() : video.pause();
+      if (this.state.playFilm) {
+        video.play();
+      } else {
+        video.pause();
+      }
     }
 
     exitButtonClickHandler() {
-      this.routerProps.history.goBack();
+      this.props.onExitClick();
     }
 
     filmPlayHandler() {
@@ -88,7 +94,8 @@ export const withPlayer = (Component) => {
 
   WithPlayer.propTypes = {
     films: PropTypes.arrayOf(propsForFilms).isRequired,
-    routerProps: propsForRouter,
+    match: PropTypes.object.isRequired,
+    onExitClick: PropTypes.func.isRequired,
   };
 
   const mapStateToProps = ({DATA}) => ({

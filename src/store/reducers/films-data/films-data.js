@@ -4,7 +4,9 @@ import {ActionType} from '../../action';
 
 const InitialState = {
   films: ``,
+  promoFilm: ``,
   genresList: ``,
+  isApplicationReady: false,
 };
 
 export const filmsData = (state = InitialState, action) => {
@@ -13,6 +15,14 @@ export const filmsData = (state = InitialState, action) => {
       return extend(state, {
         films: action.payload,
         genresList: Array.from(getUniqueFilmsGenres({films: action.payload})),
+      });
+    case ActionType.LOAD_PROMO_FILM:
+      return extend(state, {
+        promoFilm: action.payload,
+      });
+    case ActionType.ENABLE_APPLICATION:
+      return extend(state, {
+        isApplicationReady: action.payload,
       });
   }
 

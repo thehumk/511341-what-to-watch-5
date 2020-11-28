@@ -1,8 +1,10 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import FilmsList from '../films-list/films-list';
 import {propsForFilms} from '../../utils/prop-types';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
-import {QUANTITY_RENDER_FILMS} from '../../utils/const';
+import {QUANTITY_RENDER_FILMS, MAX_QUANTITY_GENRES_TO_RENDER} from '../../utils/const';
 import {getFilteredFilms} from '../../store/selectors';
 
 const GenresList = (props) => {
@@ -11,13 +13,12 @@ const GenresList = (props) => {
   return (
     <>
       <ul className="catalog__genres-list">
-        {genresList.map((elem, i) => (
-          <li key={i} className={`catalog__genres-item ${activeGenre === elem ? `catalog__genres-item--active` : ``}`} onClick={(evt) => {
-            evt.preventDefault();
+        {genresList.slice(0, MAX_QUANTITY_GENRES_TO_RENDER).map((elem, i) => (
+          <li key={i} className={`catalog__genres-item ${activeGenre === elem ? `catalog__genres-item--active` : ``}`} onClick={() => {
             changeActiveGenre(elem);
             changeRenderFilmsCount(QUANTITY_RENDER_FILMS);
           }}>
-            <a href="#" className="catalog__genres-link">{elem}</a>
+            <a className="catalog__genres-link">{elem}</a>
           </li>
         ))}
       </ul>
@@ -56,4 +57,5 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
+export {GenresList};
 export default connect(mapStateToProps, mapDispatchToProps)(GenresList);

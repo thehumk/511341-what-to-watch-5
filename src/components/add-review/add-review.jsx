@@ -1,13 +1,15 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import ReviewForm from '../review-form/review-form';
-import {propsForFilms, propsForRouter} from '../../utils/prop-types';
-import {AppRoute} from '../../utils/const';
+import {propsForFilms} from '../../utils/prop-types';
+import Header from '../header/header';
 
 const AddReview = (props) => {
-  const {films} = props;
-  const {match} = props.routerProps;
+  const {films, match} = props;
   const film = films.find((elem) => elem.id.toString() === match.params.id);
+
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
@@ -17,15 +19,7 @@ const AddReview = (props) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header">
-          <div className="logo">
-            <Link to={AppRoute.ROOT} className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
+        <Header>
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
@@ -36,15 +30,7 @@ const AddReview = (props) => {
               </li>
             </ul>
           </nav>
-
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <Link to={AppRoute.MY_LIST}>
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </Link>
-            </div>
-          </div>
-        </header>
+        </Header>
 
         <div className="movie-card__poster movie-card__poster--small">
           <img src={film.poster_image} alt={film.name} width="218" height="327" />
@@ -52,7 +38,7 @@ const AddReview = (props) => {
       </div>
 
       <div className="add-review">
-        <ReviewForm/>
+        <ReviewForm filmId={film.id}/>
       </div>
 
     </section>
@@ -61,11 +47,12 @@ const AddReview = (props) => {
 
 AddReview.propTypes = {
   films: PropTypes.arrayOf(propsForFilms).isRequired,
-  routerProps: propsForRouter,
+  match: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = ({DATA}) => ({
   films: DATA.films,
 });
 
+export {AddReview};
 export default connect(mapStateToProps)(AddReview);

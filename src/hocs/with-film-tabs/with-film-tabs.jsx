@@ -1,4 +1,8 @@
-import {propsForFilms} from '../../utils/prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {propsForFilms, propsForComments} from '../../utils/prop-types';
+import {fetchCommentsFilm} from '../../store/api-actions';
 
 const TypeTabs = {
   OVERVIEW: `Overview`,
@@ -14,10 +18,22 @@ export const withFilmTabs = (Component) => {
       this.film = props.film;
 
       this.state = {
-        tab: TypeTabs.OVERVIEW
+        tab: TypeTabs.OVERVIEW,
       };
 
       this.tabsClickHandler = this.tabsClickHandler.bind(this);
+    }
+
+    componentDidMount() {
+      this.props.getFilmComments(this.film.id);
+    }
+
+    componentDidUpdate() {
+      if (this.film.id !== this.props.film.id) {
+        this.setState({tab: TypeTabs.OVERVIEW});
+        this.film = this.props.film;
+        this.props.getFilmComments(this.film.id);
+      }
     }
 
     tabsClickHandler(evt, type) {
@@ -31,11 +47,13 @@ export const withFilmTabs = (Component) => {
     }
 
     render() {
-      this.film = this.props.film;
+      const {filmComments} = this.props;
+
       return (
         <Component
           {...this.props}
           film={this.film}
+          filmComments={filmComments}
           tab={this.state.tab}
           tabsClickHandler={this.tabsClickHandler}
         />
@@ -45,7 +63,19 @@ export const withFilmTabs = (Component) => {
 
   WithFilmTabs.propTypes = {
     film: propsForFilms,
+    filmComments: PropTypes.arrayOf(propsForComments).isRequired,
+    getFilmComments: PropTypes.func.isRequired,
   };
 
-  return WithFilmTabs;
+  const mapStateToProps = ({COMMENTS}) => ({
+    filmComments: COMMENTS.comments,
+  });
+
+  const mapDispatchToProps = (dispatch) => ({
+    getFilmComments(id) {
+      dispatch(fetchCommentsFilm(id));
+    },
+  });
+
+  return connect(mapStateToProps, mapDispatchToProps)(WithFilmTabs);
 };
