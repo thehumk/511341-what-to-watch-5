@@ -1,15 +1,19 @@
-import {Switch, Route, Router} from 'react-router-dom';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Switch, Route, Router, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 import PrivateRoute from '../private-route/private-route';
 import Main from '../main/main';
-import SingIn from '../sing-in/sing-in';
+import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
 import Film from '../film/film';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import browserHistory from '../../browser-history';
-import {AppRoute} from '../../utils/const';
+import {AppRoute, AuthorizationStatus} from '../../utils/const';
 
-const App = () => {
+const App = (props) => {
+  const {authorizationStatus} = props;
   return (
     <Router history={browserHistory}>
       <Switch>
@@ -17,14 +21,19 @@ const App = () => {
           path={AppRoute.ROOT}
           render={({history}) => (
             <Main
-              onMyListButtonClick={() => history.push(AppRoute.MY_LIST)}
               onPlayerButtonClick={(id) => history.push(`/player/${id}`)}
             />
           )}
         />
-        <Route exact path={AppRoute.SING_IN}>
-          <SingIn/>
-        </Route>
+        <Route exact path={AppRoute.SIGN_IN}
+          render={() => {
+            return (
+              authorizationStatus === AuthorizationStatus.NO_AUTH
+                ? <SignIn/>
+                : <Redirect to={AppRoute.ROOT}/>
+            );
+          }}
+        />
         <PrivateRoute
           exact
           path={AppRoute.MY_LIST}
@@ -36,26 +45,25 @@ const App = () => {
         />
         <Route exact
           path={AppRoute.FILM}
-          render={(routerProps) => (
+          render={({history, match}) => (
             <Film
-              routerProps={routerProps}
-              onMyListButtonClick={() => routerProps.history.push(AppRoute.MY_LIST)}
-              onPlayerButtonClick={(id) => routerProps.history.push(`/player/${id}`)}
+              match={match}
+              onPlayerButtonClick={(id) => history.push(`/player/${id}`)}
             />
           )}
         />
         <PrivateRoute
           exact
           path={AppRoute.FILM_REVIEW}
-          render={(routerProps) => {
+          render={({match}) => {
             return (
-              <AddReview routerProps={routerProps}/>
+              <AddReview match={match}/>
             );
           }}
         />
         <Route exact path={AppRoute.FILM_PLAYER}
-          render={(routerProps) => (
-            <Player routerProps={routerProps}/>
+          render={({match, history}) => (
+            <Player match={match} onExitClick={() => history.goBack()}/>
           )}
         />
       </Switch>
@@ -63,4 +71,13 @@ const App = () => {
   );
 };
 
-export default App;
+App.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = ({USER}) => ({
+  authorizationStatus: USER.authorizationStatus,
+});
+
+export {App};
+export default connect(mapStateToProps)(App);

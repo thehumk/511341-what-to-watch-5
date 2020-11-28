@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import {propsForFilms} from '../../utils/prop-types';
 import {QUANTITY_RENDER_FILMS} from '../../utils/const';
 

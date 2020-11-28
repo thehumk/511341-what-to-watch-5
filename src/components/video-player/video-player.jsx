@@ -1,13 +1,19 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import {propsForFilms} from '../../utils/prop-types';
 
 const HOVER_TIMEOUT = 1000;
+
+const PreviewSize = {
+  WIDTH: `280`,
+  HEIGHT: `175`,
+};
 
 class VideoPlayer extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.film = props.film;
-    this.size = props.size;
     this.playerStatus = props.playerStatus;
 
     this.videoRef = React.createRef();
@@ -38,8 +44,8 @@ class VideoPlayer extends React.PureComponent {
           ref={this.videoRef}
           poster={this.film.preview_image}
           src={this.film.preview_video_link}
-          width={this.size.WIDTH}
-          height={this.size.HEIGHT}
+          width={PreviewSize.WIDTH}
+          height={PreviewSize.HEIGHT}
           muted
         />
       </>
@@ -49,10 +55,6 @@ class VideoPlayer extends React.PureComponent {
 
 VideoPlayer.propTypes = {
   film: propsForFilms,
-  size: PropTypes.shape({
-    WIDTH: PropTypes.string.isRequired,
-    HEIGHT: PropTypes.string.isRequired,
-  }),
   playerStatus: PropTypes.bool.isRequired,
 };
 

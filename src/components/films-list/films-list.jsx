@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import {propsForFilms} from '../../utils/prop-types';
 import FilmCard from '../film-card/film-card';
 import ShowMoreButton from '../show-more-button/show-more-button';
@@ -32,4 +34,5 @@ FilmsList.propTypes = {
   showMoreButtonClickHandler: PropTypes.func.isRequired,
 };
 
+export {FilmsList};
 export default withFilmsList(FilmsList);

@@ -1,7 +1,10 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import {withReviewForm} from '../../hocs/with-review-form/with-review-form';
+import {LengthOfTextComment} from '../../utils/const';
 
 const ReviewForm = (props) => {
-  const {submitHandler, fieldChangeHandler} = props;
+  const {disabledSubmit, submitHandler, fieldChangeHandler} = props;
   return (
     <form action="#" className="add-review__form" onSubmit={submitHandler}>
       <div className="rating">
@@ -24,9 +27,9 @@ const ReviewForm = (props) => {
       </div>
 
       <div className="add-review__text">
-        <textarea className="add-review__textarea" name="reviewText" id="review-text" placeholder="Review text" onChange={fieldChangeHandler}></textarea>
+        <textarea className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" minLength={LengthOfTextComment.MIN} maxLength={LengthOfTextComment.MAX} onChange={fieldChangeHandler}></textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">Post</button>
+          <button className="add-review__btn" type="submit" disabled={disabledSubmit ? `disabled` : ``}>Post</button>
         </div>
 
       </div>
@@ -35,8 +38,10 @@ const ReviewForm = (props) => {
 };
 
 ReviewForm.propTypes = {
+  disabledSubmit: PropTypes.bool.isRequired,
   submitHandler: PropTypes.func.isRequired,
   fieldChangeHandler: PropTypes.func.isRequired,
 };
 
+export {ReviewForm};
 export default withReviewForm(ReviewForm);

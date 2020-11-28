@@ -3,7 +3,7 @@ import axios from 'axios';
 const BASE_URL = `https://5.react.pages.academy/wtw`;
 const REQUEST_TIMEOUT = 5000;
 
-const HttpCode = {
+export const HttpCode = {
   UNAUTHORIZED: 401,
 };
 

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should WithPlayer render correctly 1`] = `
+<div>
+  <video
+    className="player__video"
+    muted={true}
+    onTimeUpdate={[Function]}
+    poster="img/undefined"
+    src="http://media.xiph.org/mango/tears_of_steel_1080p.webm"
+  />
+</div>
+`;

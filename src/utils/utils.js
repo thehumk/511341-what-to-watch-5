@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getRandomNumber = (min, max, fractional = 0) => {
   const randomNumber = min + Math.random() * (max - min);
   return randomNumber.toFixed(fractional);
@@ -17,4 +19,8 @@ export const getFormattedLeftTime = (leftTime) => {
   const seconds = addZeroForTime(Math.floor(leftTime - (hours * 3600) - (minutes * 60)));
 
   return `${hours}:${minutes}:${seconds}`;
+};
+
+export const setFormatCommentDate = (date) => {
+  return moment(Date.parse(date)).format(`MMMM DD, YYYY`);
 };

@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 
+/* eslint-disable */
+
 export const propsForFilms = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
@@ -15,12 +17,26 @@ export const propsForFilms = PropTypes.shape({
   rating: PropTypes.number.isRequired,
   scores_count: PropTypes.number.isRequired,
   run_time: PropTypes.number.isRequired,
-  // reviews: PropTypes.arrayOf(PropTypes.shape({
-  //   text: PropTypes.string.isRequired,
-  //   userRating: PropTypes.string.isRequired,
-  //   userName: PropTypes.string.isRequired,
-  //   date: PropTypes.string.isRequired,
-  // })).isRequired,
+}).isRequired;
+
+export const propsForUser = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  avatar_url: PropTypes.string.isRequired,
+});
+
+/* eslint-enable */
+
+export const propsForComments = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  comment: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
 }).isRequired;
 
 export const propsForRouter = PropTypes.shape({

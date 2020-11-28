@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should FilmTabs render correctly 1`] = `
+<div
+  className="movie-card__desc"
+>
+  <nav
+    className="movie-nav movie-card__nav"
+  >
+    <ul
+      className="movie-nav__list"
+    >
+      <li
+        className="movie-nav__item "
+      >
+        <a
+          className="movie-nav__link"
+          href="#"
+          onClick={[Function]}
+        >
+          Overview
+        </a>
+      </li>
+      <li
+        className="movie-nav__item "
+      >
+        <a
+          className="movie-nav__link"
+          href="#"
+          onClick={[Function]}
+        >
+          Details
+        </a>
+      </li>
+      <li
+        className="movie-nav__item movie-nav__item--active"
+      >
+        <a
+          className="movie-nav__link"
+          href="#"
+          onClick={[Function]}
+        >
+          Reviews
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div
+    className="movie-card__reviews movie-card__row"
+  >
+    <div
+      className="movie-card__reviews-col"
+    >
+      <div
+        className="review"
+      >
+        <blockquote
+          className="review__quote"
+        >
+          <p
+            className="review__text"
+          >
+            123
+          </p>
+          <footer
+            className="review__details"
+          >
+            <cite
+              className="review__author"
+            >
+              Isaac
+            </cite>
+            <time
+              className="review__date"
+              dateTime="2016-12-24"
+            >
+              October 29, 2020
+            </time>
+          </footer>
+        </blockquote>
+        <div
+          className="review__rating"
+        >
+          4.6
+        </div>
+      </div>
+      <div
+        className="review"
+      >
+        <blockquote
+          className="review__quote"
+        >
+          <p
+            className="review__text"
+          >
+            1234
+          </p>
+          <footer
+            className="review__details"
+          >
+            <cite
+              className="review__author"
+            >
+              Isa
+            </cite>
+            <time
+              className="review__date"
+              dateTime="2016-12-24"
+            >
+              October 29, 2020
+            </time>
+          </footer>
+        </blockquote>
+        <div
+          className="review__rating"
+        >
+          4.5
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

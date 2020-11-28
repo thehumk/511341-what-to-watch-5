@@ -1,6 +1,8 @@
 import React from 'react';
-import {propsForFilms} from '../../utils/prop-types';
+import PropTypes from 'prop-types';
+import {propsForFilms, propsForComments} from '../../utils/prop-types';
 import {getFilmRating} from '../../utils/film';
+import {setFormatCommentDate} from '../../utils/utils';
 import {withFilmTabs} from '../../hocs/with-film-tabs/with-film-tabs';
 
 const TypeTabs = {
@@ -10,7 +12,7 @@ const TypeTabs = {
 };
 
 const FilmTabs = (props) => {
-  const {film, tab, tabsClickHandler} = props;
+  const {film, filmComments, tab, tabsClickHandler} = props;
   const textRating = getFilmRating(film.rating);
   const duration = (film.run_time / 60 | 0) + `h ` + (film.run_time % 60) + `m`;
 
@@ -98,20 +100,20 @@ const FilmTabs = (props) => {
       {tab === TypeTabs.REVIEWS && (
         <div className="movie-card__reviews movie-card__row">
           <div className="movie-card__reviews-col">
-            {/* {film.reviews.map((elem, i) => (
+            {filmComments.map((elem, i) => (
               <div className="review" key={i}>
                 <blockquote className="review__quote">
-                  <p className="review__text">{elem.text}</p>
+                  <p className="review__text">{elem.comment}</p>
 
                   <footer className="review__details">
-                    <cite className="review__author">{elem.userName}</cite>
-                    <time className="review__date" dateTime="2016-12-24">December 24, 2016</time>
+                    <cite className="review__author">{elem.user.name}</cite>
+                    <time className="review__date" dateTime="2016-12-24">{setFormatCommentDate(elem.date)}</time>
                   </footer>
                 </blockquote>
 
-                <div className="review__rating">{elem.userRating}</div>
+                <div className="review__rating">{elem.rating}</div>
               </div>
-            ))} */}
+            ))}
           </div>
         </div>
       )}
@@ -121,8 +123,10 @@ const FilmTabs = (props) => {
 
 FilmTabs.propTypes = {
   film: propsForFilms,
+  filmComments: PropTypes.arrayOf(propsForComments).isRequired,
   tab: PropTypes.string.isRequired,
   tabsClickHandler: PropTypes.func.isRequired,
 };
 
+export {FilmTabs};
 export default withFilmTabs(FilmTabs);

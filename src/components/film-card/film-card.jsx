@@ -1,12 +1,9 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {propsForFilms} from '../../utils/prop-types';
 import VideoPlayer from '../video-player/video-player';
 import {withFilmCard} from '../../hocs/with-film-card/with-film-card';
-
-const PreviewSize = {
-  WIDTH: `280`,
-  HEIGHT: `175`,
-};
 
 const FilmCard = (props) => {
   const {film, playerStatus, mouseEnterHandler, mouseLeaveHandler} = props;
@@ -16,7 +13,7 @@ const FilmCard = (props) => {
       onMouseLeave={mouseLeaveHandler}>
       <Link className="small-movie-card__link" to={`/films/${film.id}`}>
         <div className="small-movie-card__image">
-          <VideoPlayer film={film} size={PreviewSize} playerStatus={playerStatus} />
+          <VideoPlayer film={film} playerStatus={playerStatus} />
         </div>
         <h3 className="small-movie-card__title">
           <span>{film.name}</span>
@@ -33,4 +30,5 @@ FilmCard.propTypes = {
   mouseLeaveHandler: PropTypes.func.isRequired,
 };
 
+export {FilmCard};
 export default withFilmCard(FilmCard);
