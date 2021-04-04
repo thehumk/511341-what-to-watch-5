@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import renderer from 'react-test-renderer';
 import {withPlayer} from './with-player';
-import {noop, films, state, MATCH} from '../../test-data';
+import {noop, mockFilms, state, MATCH} from '../../test-data';
 
 const mockStore = configureMockStore()(state);
 
@@ -22,7 +22,7 @@ it(`Should WithPlayer render correctly`, () => {
   const tree = renderer.create((
     <Provider store={mockStore}>
       <MockComponentContainer
-        films={films}
+        films={mockFilms}
         match={MATCH}
         onExitClick={noop}>
         <React.Fragment/>
